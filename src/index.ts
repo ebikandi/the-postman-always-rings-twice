@@ -1,3 +1,7 @@
-const HelloWorld = () => console.log('Bundling works!');
+const HelloWorld = () => {
+  const msg = 'Bundling works!';
+  console.log(msg);
+  return msg;
+};
 
-HelloWorld();
+export default HelloWorld();
