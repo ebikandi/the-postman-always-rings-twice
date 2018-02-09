@@ -4,8 +4,10 @@
   "description": "A premium/regular parcel distributing srevice in Js",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "clean": "rimraf dist",
+    "build": "npm run clean && webpack",
     "start": "node dist/bundle.js",
+    "clean-start": "npm run build && npm run start",
     "test": "jest --coverage"
   },
   "jest": {
@@ -39,6 +41,7 @@
     "awesome-typescript-loader": "^3.4.1",
     "jest": "^22.2.1",
     "prettier": "^1.10.2",
+    "rimraf": "^2.6.2",
     "source-map-loader": "^0.2.3",
     "ts-jest": "^22.0.3",
     "tslint": "^5.9.1",
