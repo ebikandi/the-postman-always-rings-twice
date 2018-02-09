@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 const DELAYS = [0, 100, 300, 1000];
 const MAX_RETRIES = 3;
 
-class Parcel extends EventEmitter {
+export default class Parcel extends EventEmitter {
   private retries: number;
 
   constructor() {
