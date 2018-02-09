@@ -23,10 +23,17 @@ export default class Parcel extends EventEmitter {
 
       console.log(`condition: ${this.retries <= this.maxRetries}`);
       this.retries <= this.maxRetries
-        ? setTimeout(() => {
-            this.emit('parcel-ready');
-          }, DELAYS[this.retries])
+        ? this.waitAndRetry()
         : this.emit('dead-inbox');
     }
+  }
+
+  private waitAndRetry() {
+    // TODO fix message
+    // TODO who has to print the log??
+    console.log('Retry!!');
+    setTimeout(() => {
+      this.emit('parcel-ready');
+    }, DELAYS[this.retries]);
   }
 }
