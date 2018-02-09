@@ -8,6 +8,13 @@ export default class PostWoman {
   private successRate: number;
 
   constructor() {
+    this.initializeProps();
+    setInterval(() => this.setSuccessRate(), 1000);
+  }
+
+  // public receivePackage() {}
+
+  private initializeProps() {
     this.inbox = {};
     this.premiumRetryQueue = [];
     this.premiumNewQueue = [];
@@ -15,14 +22,11 @@ export default class PostWoman {
     this.regularNewQueue = [];
     this.isBusy = false;
     this.setSuccessRate();
-    setInterval(() => this.setSuccessRate(), 1000);
   }
-
-  //   public receivePackage() {}
 
   private setSuccessRate() {
     const failRate = Math.random() * (0.21 - 0.05) + 0.05;
     this.successRate = 1 - failRate;
-    console.log(`Rate: ${this.successRate}`);
+    // console.log(`Rate: ${this.successRate}`);
   }
 }
