@@ -1,0 +1,53 @@
+{
+  "name": "enekobikandi-the-postman-always-rings-twice",
+  "version": "0.0.1",
+  "description": "A premium/regular parcel distributing srevice in Js",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && webpack",
+    "start": "node dist/bundle.js",
+    "clean-start": "npm run build && npm run start",
+    "test": "jest --coverage"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testMatch": [
+      "**/test/**"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "prettier --write --single-quote --trailing-comma es5",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://enekobikandi@bitbucket.org/eloygarcia_sh/enekobikandi-the-postman-always-rings-twice.git"
+  },
+  "author": "Eneko Bikandi",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/eloygarcia_sh/enekobikandi-the-postman-always-rings-twice#readme",
+  "devDependencies": {
+    "@types/jest": "^22.1.1",
+    "@types/node": "^8.9.1",
+    "awesome-typescript-loader": "^3.4.1",
+    "jest": "^22.2.1",
+    "prettier": "^1.10.2",
+    "rimraf": "^2.6.2",
+    "source-map-loader": "^0.2.3",
+    "ts-jest": "^22.0.3",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.7.0",
+    "tslint-plugin-prettier": "^1.3.0",
+    "typescript": "^2.7.1",
+    "webpack": "^3.10.0"
+  }
+}
