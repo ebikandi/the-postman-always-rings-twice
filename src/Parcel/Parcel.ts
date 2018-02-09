@@ -12,7 +12,7 @@ class Parcel extends EventEmitter {
     this.retries = 0;
   }
 
-  private send(succesRate: number) {
+  public send(succesRate: number) {
     const successfullySent = Math.random() <= succesRate;
     if (successfullySent) {
       this.emit('successfully-sent');
