@@ -23,4 +23,8 @@ export default class QueueManager<T> extends EventEmitter {
   public itemCount(): number {
     return this.length;
   }
+
+  public isEmpty(): boolean {
+    return this.length === 0;
+  }
 }
