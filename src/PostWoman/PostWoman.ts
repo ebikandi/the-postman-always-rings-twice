@@ -41,7 +41,7 @@ const subscribeToParcelEvents = () => {
       )
     )
     .on(ParcelEvents.dead, (p: Parcel) =>
-      console.warn(
+      console.error(
         `${new Date().toISOString()} [ERROR] Parcel ${p.getCode()} won't be delivered to to ${p.getEmployee()}. Retries: ${p.getRetries()}`
       )
     );
