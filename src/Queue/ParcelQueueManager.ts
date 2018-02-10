@@ -1,25 +1,47 @@
 import Parcel from '../Parcel/Parcel';
-import Queue from './Queue';
 
 export default class ParcelQueueManager {
-  private premiumRetryQueue: Queue<Parcel>;
-  private premiumNewQueue: Queue<Parcel>;
-  private regularRetryQueue: Queue<Parcel>;
-  private regularNewQueue: Queue<Parcel>;
+  private premiumRetryQueue: Parcel[];
+  private premiumNewQueue: Parcel[];
+  private regularRetryQueue: Parcel[];
+  private regularNewQueue: Parcel[];
 
   constructor() {
-    this.premiumRetryQueue = new Queue<Parcel>();
-    this.premiumNewQueue = new Queue<Parcel>();
-    this.regularRetryQueue = new Queue<Parcel>();
-    this.regularNewQueue = new Queue<Parcel>();
+    this.premiumRetryQueue = [];
+    this.premiumNewQueue = [];
+    this.regularRetryQueue = [];
+    this.regularNewQueue = [];
   }
 
-  public queuesEmpty(): boolean {
-    return (
-      this.premiumRetryQueue.isEmpty() &&
-      this.premiumNewQueue.isEmpty() &&
-      this.regularRetryQueue.isEmpty() &&
-      this.regularNewQueue.isEmpty()
-    );
+  public enqueue(parcel: Parcel, retried: boolean = false) {
+    if (retried) {
+      parcel.isPremium
+        ? this.premiumRetryQueue.push(parcel)
+        : this.premiumNewQueue.push(parcel);
+    } else {
+      parcel.isPremium
+        ? this.regularRetryQueue.push(parcel)
+        : this.regularNewQueue.push(parcel);
+    }
+  }
+
+  public getNextParcel(): Parcel | undefined {
+    let nextParcel = this.premiumRetryQueue.shift();
+    if (!!nextParcel) {
+      return nextParcel;
+    }
+    nextParcel = this.premiumNewQueue.shift();
+    if (!!nextParcel) {
+      return nextParcel;
+    }
+    nextParcel = this.regularRetryQueue.shift();
+    if (!!nextParcel) {
+      return nextParcel;
+    }
+    nextParcel = this.regularNewQueue.shift();
+    if (!!nextParcel) {
+      return nextParcel;
+    }
+    return undefined;
   }
 }
