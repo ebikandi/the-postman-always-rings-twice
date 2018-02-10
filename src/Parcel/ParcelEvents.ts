@@ -1,6 +1,6 @@
 export default {
-  dead: 'dead',
-  ready: 'ready',
-  retry: 'retry',
-  success: 'success',
+  DEAD: 'dead',
+  READY: 'ready',
+  RETRY: 'retry',
+  SUCCESS: 'success',
 };

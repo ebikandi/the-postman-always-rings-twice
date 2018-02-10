@@ -7,6 +7,7 @@ const DELAYS = [0, 100, 300, 1000];
 export default class Parcel {
   private retries: number;
   private maxRetries: number;
+
   private code: string;
   private employee: string;
   private premium: boolean;
@@ -47,20 +48,19 @@ export default class Parcel {
     const successfullySent = Math.random() < succesRate;
 
     if (successfullySent) {
-      this.emitter.emit(ParcelEvents.success, this);
+      this.emitter.emit(ParcelEvents.SUCCESS, this);
     } else {
-      this.retries++;
-
-      this.retries <= this.maxRetries
+      this.retries < this.maxRetries
         ? this.waitAndRetry()
-        : this.emitter.emit(ParcelEvents.dead, this);
+        : this.emitter.emit(ParcelEvents.DEAD, this);
     }
   }
 
   private waitAndRetry() {
-    this.emitter.emit(ParcelEvents.retry, this);
+    this.emitter.emit(ParcelEvents.RETRY, this);
+    this.retries++;
     setTimeout(() => {
-      this.emitter.emit(ParcelEvents.ready, this);
+      this.emitter.emit(ParcelEvents.READY, this);
     }, DELAYS[this.retries]);
   }
 }
