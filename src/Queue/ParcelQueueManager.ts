@@ -13,14 +13,14 @@ export default class ParcelQueueManager {
     this.regularNewQueue = [];
   }
 
-  public enqueue(parcel: Parcel, retried: boolean = false) {
+  public enqueue(parcel: Parcel, retried = false) {
     if (retried) {
       parcel.isPremium
         ? this.premiumRetryQueue.push(parcel)
-        : this.premiumNewQueue.push(parcel);
+        : this.regularRetryQueue.push(parcel);
     } else {
       parcel.isPremium
-        ? this.regularRetryQueue.push(parcel)
+        ? this.premiumNewQueue.push(parcel)
         : this.regularNewQueue.push(parcel);
     }
   }
@@ -30,14 +30,17 @@ export default class ParcelQueueManager {
     if (!!nextParcel) {
       return nextParcel;
     }
+
     nextParcel = this.premiumNewQueue.shift();
     if (!!nextParcel) {
       return nextParcel;
     }
+
     nextParcel = this.regularRetryQueue.shift();
     if (!!nextParcel) {
       return nextParcel;
     }
+
     nextParcel = this.regularNewQueue.shift();
     if (!!nextParcel) {
       return nextParcel;
