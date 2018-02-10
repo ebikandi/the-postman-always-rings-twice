@@ -1,55 +1,37 @@
 import Parcel from '../Parcel/Parcel';
-import QueueManager from '../Queue/QueueManager';
+import ParcelQueueManager from '../Queue/ParcelQueueManager';
 
-export default class PostWoman {
-  private inbox: any;
-  // TODO study if all this queues can be somewhere else
-  private premiumRetryQueue: QueueManager<Parcel>;
-  private premiumNewQueue: QueueManager<Parcel>;
-  private regularRetryQueue: QueueManager<Parcel>;
-  private regularNewQueue: QueueManager<Parcel>;
-  private isBusy: boolean;
-  private successRate: number;
+const getSuccessRate = () => 1 - (Math.random() * (0.21 - 0.05) + 0.05);
 
-  constructor() {
-    this.initializeProps();
-    setInterval(() => this.setSuccessRate(), 1000);
+let successRate: number = getSuccessRate();
+
+const postWomanAvailable = () => successRate >= 0.85;
+
+let initialized: boolean = false;
+
+const inbox: any = {};
+
+const parcelQueues = new ParcelQueueManager();
+
+const initializeSuccessRateCheck = () => {
+  if (!initialized) {
+    initialized = true;
+    setInterval(() => {
+      successRate = getSuccessRate();
+      console.log('RATE: ', successRate);
+    }, 1000);
   }
+};
 
-  public receivePackage(code: string, employee: string, premium: boolean) {
-    if (this.queuesEmpty() && this.postWomanAvailable()) {
-      // Parcel.send
-    } else {
-      // Enqueue parcel
-    }
+const sendParcel = (parcel: Parcel) => {
+  initializeSuccessRateCheck();
+  if (parcelQueues.queuesEmpty() && postWomanAvailable()) {
+    parcel.send(successRate);
+  } else {
+    parcelQueues.enqueue(parcel.getCode());
   }
+};
 
-  private queuesEmpty(): boolean {
-    return (
-      this.premiumRetryQueue.isEmpty() &&
-      this.premiumNewQueue.isEmpty() &&
-      this.regularRetryQueue.isEmpty() &&
-      this.regularNewQueue.isEmpty()
-    );
-  }
+const PostWoman = { sendParcel };
 
-  private postWomanAvailable(): boolean {
-    return this.successRate >= 0.85;
-  }
-
-  private initializeProps() {
-    this.inbox = {};
-    this.premiumRetryQueue = new QueueManager<Parcel>();
-    this.premiumNewQueue = new QueueManager<Parcel>();
-    this.regularRetryQueue = new QueueManager<Parcel>();
-    this.regularNewQueue = new QueueManager<Parcel>();
-    this.isBusy = false;
-    this.setSuccessRate();
-  }
-
-  private setSuccessRate() {
-    const failRate = Math.random() * (0.21 - 0.05) + 0.05;
-    this.successRate = 1 - failRate;
-    // console.log(`Rate: ${this.successRate}`);
-  }
-}
+export default PostWoman;
