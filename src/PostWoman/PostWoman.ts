@@ -28,23 +28,34 @@ const initializeSuccessRateCheck = () => {
   }, 1000);
 };
 
+const processNextParcel = () => {
+  const parcel = parcelQueues.getNextParcel();
+  if (!!parcel) {
+    parcel.send(successRate);
+  }
+};
+
 const subscribeToParcelEvents = () => {
   emitter
-    .on(ParcelEvents.success, (p: Parcel) =>
+    .on(ParcelEvents.success, (p: Parcel) => {
       console.info(
         `${new Date().toISOString()} [INFO] Parcel ${p.getCode()} successfully delivered to ${p.getEmployee()}. Retries: ${p.getRetries()}`
-      )
-    )
-    .on(ParcelEvents.retry, (p: Parcel) =>
+      );
+      processNextParcel();
+    })
+    .on(ParcelEvents.retry, (p: Parcel) => {
       console.warn(
         `${new Date().toISOString()} [WARN] Parcel ${p.getCode()} failed to be delivered to to ${p.getEmployee()}. Retries: ${p.getRetries()}`
-      )
-    )
-    .on(ParcelEvents.dead, (p: Parcel) =>
+      );
+      processNextParcel();
+    })
+    .on(ParcelEvents.dead, (p: Parcel) => {
       console.error(
         `${new Date().toISOString()} [ERROR] Parcel ${p.getCode()} won't be delivered to to ${p.getEmployee()}. Retries: ${p.getRetries()}`
-      )
-    );
+      );
+      processNextParcel();
+    })
+    .on(ParcelEvents.ready, (p: Parcel) => parcelQueues.enqueue(p));
 };
 
 const initializeIfNeeded = () => {
@@ -55,7 +66,12 @@ const initializeIfNeeded = () => {
   }
 };
 
-const getParcelFromCarrier = (parcel: Parcel) => {
+const getParcelFromCarrier = (
+  code: string,
+  employee: string,
+  premium: boolean
+) => {
+  const parcel = new Parcel(code, employee, premium, emitter);
   initializeIfNeeded();
   parcelQueues.enqueue(parcel);
 };
