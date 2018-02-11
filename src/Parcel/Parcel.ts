@@ -55,8 +55,7 @@ export default class Parcel {
   }
 
   public async send(succesRate: number) {
-    const x = this.premium ? 0.4 : succesRate;
-    const successfullySent = Math.random() < x;
+    const successfullySent = Math.random() < succesRate;
     await delay(); // Simulate some delay to force queueing some parcels
     if (successfullySent) {
       this.emitter.emit(ParcelEvents.SUCCESS, this);
