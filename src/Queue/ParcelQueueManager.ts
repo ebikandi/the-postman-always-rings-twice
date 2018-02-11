@@ -13,13 +13,13 @@ export default class ParcelQueueManager {
     this.regularNewQueue = [];
   }
 
-  public enqueue(parcel: Parcel, retried = false) {
+  public queue(parcel: Parcel, retried = false) {
     if (retried) {
-      parcel.isPremium
+      parcel.isPremium()
         ? this.premiumRetryQueue.push(parcel)
         : this.regularRetryQueue.push(parcel);
     } else {
-      parcel.isPremium
+      parcel.isPremium()
         ? this.premiumNewQueue.push(parcel)
         : this.regularNewQueue.push(parcel);
     }
@@ -46,5 +46,14 @@ export default class ParcelQueueManager {
       return nextParcel;
     }
     return undefined;
+  }
+
+  public queuesAreEmpty() {
+    return (
+      this.premiumRetryQueue.length === 0 &&
+      this.premiumNewQueue.length === 0 &&
+      this.regularRetryQueue.length === 0 &&
+      this.regularNewQueue.length === 0
+    );
   }
 }
