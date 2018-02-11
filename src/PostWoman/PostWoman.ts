@@ -54,7 +54,7 @@ const subscribeToParcelEvents = () => {
     })
     .on(ParcelEvents.RETRY, (p: Parcel) => {
       console.warn(
-        `${new Date().toISOString()} [WARN] Parcel ${p.getCode()} failed to be delivered to to ${p.getEmployee()}. Retries: ${p.getRetries()}`
+        `${new Date().toISOString()} [WARN] Parcel ${p.getCode()} failed to be delivered to ${p.getEmployee()}. Retries: ${p.getRetries()}`
       );
       isProcessing = false;
       processNextParcel();
