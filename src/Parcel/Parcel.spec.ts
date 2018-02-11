@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events';
 import Parcel from './Parcel';
+import ParcelEvents from './ParcelEvents';
 
 // TODO fix tests
 describe('Parcel', () => {
@@ -11,7 +12,7 @@ describe('Parcel', () => {
   describe('sending the parcel', () => {
     it('should succeed with a 100% success rate', done => {
       parcel = new Parcel(code, employee, premium, emitter);
-      emitter.on('successfully-sent', () => {
+      emitter.on(ParcelEvents.SUCCESS, () => {
         expect(true).toBeTruthy();
         done();
       });
@@ -20,7 +21,7 @@ describe('Parcel', () => {
 
     it('should fail with a 0% success rate', done => {
       parcel = new Parcel(code, employee, premium, emitter, 0);
-      emitter.on('dead-inbox', () => {
+      emitter.on(ParcelEvents.DEAD, () => {
         expect(true).toBeTruthy();
         done();
       });
@@ -29,7 +30,7 @@ describe('Parcel', () => {
 
     it('should retry with a 0% success rate', done => {
       parcel = new Parcel(code, employee, premium, emitter, 1);
-      emitter.on('parcel-ready', () => {
+      emitter.on(ParcelEvents.READY, () => {
         expect(true).toBeTruthy();
         done();
       });
@@ -40,12 +41,12 @@ describe('Parcel', () => {
       let retried = false;
       parcel = new Parcel(code, employee, premium, emitter, 1);
 
-      emitter.on('parcel-ready', () => {
+      emitter.on(ParcelEvents.READY, () => {
         retried = true;
         parcel.send(0);
       });
 
-      emitter.on('dead-inbox', () => {
+      emitter.on(ParcelEvents.DEAD, () => {
         expect(retried).toBeTruthy();
         done();
       });
