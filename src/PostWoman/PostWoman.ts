@@ -12,7 +12,7 @@ let successRate: number = getSuccessRate();
 
 const postWomanAvailable = () => successRate >= MIN_AVAILABILITY_RATE;
 
-const parcelQueues = new ParcelQueueManager();
+const queueManager = new ParcelQueueManager();
 
 const emitter = new EventEmitter();
 
@@ -35,7 +35,7 @@ let isProcessing = false;
 
 const processNextParcel = async () => {
   if (postWomanAvailable() && isProcessing === false) {
-    const parcel = parcelQueues.getNextParcel();
+    const parcel = queueManager.getNextParcel();
     if (!!parcel) {
       isProcessing = true;
       await parcel.send(successRate);
@@ -71,12 +71,12 @@ const subscribeToParcelEvents = () => {
 
 const sendOrQueue = async (parcel: Parcel) => {
   if (postWomanAvailable() === false || isProcessing === true) {
-    parcelQueues.queue(parcel);
-  } else if (isProcessing === false && parcelQueues.queuesAreEmpty()) {
+    queueManager.queue(parcel);
+  } else if (isProcessing === false && queueManager.queuesAreEmpty()) {
     isProcessing = true;
     await parcel.send(successRate);
   } else {
-    parcelQueues.queue(parcel);
+    queueManager.queue(parcel);
     processNextParcel();
   }
 };
