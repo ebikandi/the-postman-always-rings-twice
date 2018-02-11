@@ -1,30 +1,4 @@
 # The postwoman always rings twice
-#### *by Eneko Bikandi*
-In this codebase there is an approach to the Postwoman problem (explained in the *Exercise.md* file). 
-
-##Disclaimer
-The approach taken has been very limited by the time I have had, so I preffer having this disclaimer to explain myself. Sadly, work and studies have requested the most of my time and I have not been able to make or research some improvements that could be interesting:
-
-* I have chosen Typescript as the coding language, even though Java would be better as it is part of Stubhub main stack. This decision has been taken because I felt that I could write better code in less time basicallly, because I enjoy coding in JavaScript. Also, the typing and modularization of Typescript brings a good option to write it in OOP way.
-* The main complexity comes when we see that the modules talk with each other using events. Maybe this could be hanlded more "elegantly" using some library for managing the app state, like Redux. but as it is requested not to use frameworks and focus on the code, I wanted to stay in a lower level and manage all "by hand".
-* JavaScript Promises could be a good option to handle asynchronous behavior instead of sending events. Anyway, due to the lack of time, this has not been researched.
-* As Bitbucket offers, it would be nice to set a CI pipeline for the project builds. However, this would need to ask for access to the repo administrator and I have preferred to invest the few time I had in the code.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 We have two inboxes at StubHub where we collect parcels arriving at the office: one for premium service and the other for regular deliveries.
 Our postwoman will take care of them and will deliver to our employees.
