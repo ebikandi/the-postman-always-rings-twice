@@ -1,8 +1,18 @@
 import { EventEmitter } from 'events';
+import PostWoman from '../PostWoman/PostWoman';
 import ParcelEvents from './ParcelEvents';
 
 // Time until to do the retry in ms
 const DELAYS = [0, 100, 300, 1000];
+
+const delay = () => {
+  const p = new Promise(res =>
+    setTimeout(() => {
+      return res();
+    }, 1000)
+  );
+  return p;
+};
 
 export default class Parcel {
   private retries: number;
@@ -44,9 +54,10 @@ export default class Parcel {
     return this.retries;
   }
 
-  public send(succesRate: number) {
-    const successfullySent = Math.random() < succesRate;
-
+  public async send(succesRate: number) {
+    const x = this.premium ? 0.4 : succesRate;
+    const successfullySent = Math.random() < x;
+    await delay(); // Simulate some delay to force queueing some parcels
     if (successfullySent) {
       this.emitter.emit(ParcelEvents.SUCCESS, this);
     } else {
