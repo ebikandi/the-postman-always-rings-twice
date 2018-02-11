@@ -5,22 +5,20 @@ const readline = require('readline');
 const generateRandomParcel = (id: number) => {
   const code = `SHIP${id}`;
   const employee = `employee${id}`;
-  const premium = Math.random() <= 0.2;
-  if (premium) {
-    console.log('PREMIUM', id);
-  }
+  const premium = Math.random() <= 0.35;
+  const premiumToString = premium ? 'Premium' : 'Regular';
+  console.log(`${code},${employee}, ${premiumToString}`);
   PostWoman.getParcelFromCarrier(code, employee, premium);
 };
 
 let stopper: any;
 
 const simulation = (id = 0) => {
-  const rand = Math.round(Math.random() * (2000 - 1000)) + 1000;
   stopper = setTimeout(() => {
     id++;
     generateRandomParcel(id);
     simulation(id);
-  }, rand);
+  }, 1000);
 };
 
 const rl = readline.createInterface({
@@ -40,6 +38,9 @@ export default () => {
     } else if (line === 'stop') {
       console.log('** stoping sim **');
       clearTimeout(stopper);
+    } else if (line === 'exit') {
+      console.log('** exiting **');
+      process.exit();
     } else {
       const [code, employee, premium] = line.split(',');
       PostWoman.getParcelFromCarrier(
