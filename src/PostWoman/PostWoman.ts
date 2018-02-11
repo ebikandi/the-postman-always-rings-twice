@@ -81,13 +81,11 @@ const sendOrQueue = async (parcel: Parcel) => {
   }
 };
 
-const initialize = () => {
+(function initialize() {
   initializeSuccessRateCheck();
   subscribeToParcelEvents();
   console.log('Initialized PostWoman');
-};
-
-initialize();
+})();
 
 const getParcelFromCarrier = (
   code: string,
