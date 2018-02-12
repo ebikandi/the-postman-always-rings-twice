@@ -1,3 +1,7 @@
+/**
+ * Object to use when mocking the Parcel in the tests
+ */
+
 export const mockedSend = jest.fn();
 
 const mock = jest.fn().mockImplementation(() => {

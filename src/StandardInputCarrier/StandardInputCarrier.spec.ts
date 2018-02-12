@@ -2,11 +2,12 @@ import { EventEmitter } from 'events';
 import { mockedGetParcelFromCarrier } from '../PostWoman/PostWoman';
 import StandardInputCarrier from './StandardInputCarrier';
 
-// TODO because of initializing the carrier, the test
-// process remains "on hold" even when there are no tests
-// left to run, so the process has to be stoped manually
-// pushing ctrl+C.
-
+/**
+ * @todo TODO because of initializing the carrier, the test
+ * process remains "on hold" even when there are no tests
+ * left to run, so the process has to be stoped manually
+ * pushing ctrl+C.
+ */
 jest.mock('../PostWoman/PostWoman');
 
 const mockedLog = jest.fn();
@@ -51,8 +52,10 @@ describe('StandardInputCarrier ', () => {
   });
 
   it.skip('should exit process when reading "exit" ', done => {
-    // TODO: fix test. process.exit exits from tests and stops
-    // the tesing process, so the other tests remain unrun.
+    /**
+     * @todo fix test. process.exit exits from tests and stops
+     * the tesing process, so the other tests remain unrun.
+     */
     process.stdin.emit('data', 'exit\n');
     expect(mockedLog).toBeCalledWith('** exiting **');
     done();

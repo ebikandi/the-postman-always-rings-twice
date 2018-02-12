@@ -19,8 +19,10 @@ describe('PostWoman ', () => {
     mockedQueue.mockClear();
   });
   it('should send first parcel', done => {
-    // TODO:  there is a race condition here due to the delay in send().
-    // sometimes the test ends before letting the funtion to be called.
+    /**
+     * @todo:  there is a race condition here due to the delay in send().
+     * sometimes the test ends before letting the funtion to be called.
+     */
     PostWoman.getParcelFromCarrier('code', 'employee', true);
     expect(mockedSend).toBeCalled();
     done();
