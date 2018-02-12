@@ -55,6 +55,7 @@ export default () => {
       console.log('** exiting **');
       process.exit();
     } else {
+      // TODO check the line with regex
       const [code, employee, premium] = line.split(',');
       PostWoman.getParcelFromCarrier(
         code,
