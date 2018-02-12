@@ -63,6 +63,8 @@ const subscribeToParcelEvents = () => {
       console.error(
         `${new Date().toISOString()} [ERROR] Parcel ${p.getCode()} won't be delivered to ${p.getEmployee()}. Retries: ${p.getRetries()}`
       );
+      // TODO should p be deleted to ease the garbage collector free memory??
+      // delete p;
       isProcessing = false;
       processNextParcel();
     })
