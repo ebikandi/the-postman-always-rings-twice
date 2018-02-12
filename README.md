@@ -116,6 +116,14 @@ So, after getting the above done, there two options to run the code:
 
 If you want to develop some new feature, you can try with ***npm run start-dev***. This will build and start an app whennever a change is made in any file.
 
+After getting the app run, the StandardInputCarrier will be instantiated and initialiazed. So you could input some data (respecting the format in the statement) or run a simulation using the predefined commands. Remember:
+
+- **sim**. It will start a simulation sending a parcel each second to the PostWoman. Only logs referring to parcels' state will be prompt.
+- **sim --v**. It will start a simulation like the one above, but this time in verbose mode. This means that despite the parcel logs, it will prompt each parcel that is going to be sent to the PostWoman. Good to check the overall behaviour and if that the priorities are respected.
+- **stop**. Stops the currently running simulation. Anyway, this only stops to send parcels to the PostWoman, so if there is any retry waiting parcel when we type this, the PostWoman will try to send those.
+- **exit** Quits the carrier and ends the process. 
+
+
 To run the tests, type ***npm test***. This way, we will run the tests written using [jest](https://facebook.github.io/jest/). 
 
 	
