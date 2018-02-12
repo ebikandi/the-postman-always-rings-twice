@@ -23,6 +23,7 @@ export default class Parcel {
   private premium: boolean;
   private emitter: EventEmitter;
 
+  // TODO to many parameters in the constructor
   constructor(
     code: string,
     employee: string,
