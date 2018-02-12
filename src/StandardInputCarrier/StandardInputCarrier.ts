@@ -2,23 +2,34 @@ import PostWoman from '../PostWoman/PostWoman';
 
 const readline = require('readline');
 
-const generateRandomParcel = (id: number) => {
+const generateRandomParcel = (verboseMode: boolean, id: number) => {
   const code = `SHIP${id}`;
   const employee = `employee${id}`;
   const premium = Math.random() <= 0.35;
   const premiumToString = premium ? 'Premium' : 'Regular';
-  console.log(`${code},${employee}, ${premiumToString}`);
+  if (verboseMode === true) {
+    console.log(`${code},${employee}, ${premiumToString}`);
+  }
   PostWoman.getParcelFromCarrier(code, employee, premium);
 };
 
-let stopper: any;
+let stopper: any = null;
 
-const simulation = (id = 0) => {
-  stopper = setTimeout(() => {
-    id++;
-    generateRandomParcel(id);
-    simulation(id);
-  }, 1000);
+const getSimMsg = (isVerBose: boolean) =>
+  isVerBose ? '** starting sim -verbose **' : '** starting sim **';
+
+const simulation = (isVerbose = false, id = 0) => {
+  if (stopper === null) {
+    const msg = getSimMsg(isVerbose);
+    console.log(msg);
+    stopper = setTimeout(() => {
+      id++;
+      generateRandomParcel(isVerbose, id);
+      simulation(isVerbose, id);
+    }, 1000);
+  } else {
+    console.log('** A simulation is already running **');
+  }
 };
 
 const rl = readline.createInterface({
@@ -33,11 +44,13 @@ export default () => {
 
   rl.on('line', (line: string) => {
     if (line === 'sim') {
-      console.log('** starting sim **');
-      simulation();
+      simulation(false);
+    } else if (line === 'sim --v') {
+      simulation(true);
     } else if (line === 'stop') {
       console.log('** stoping sim **');
       clearTimeout(stopper);
+      stopper = null;
     } else if (line === 'exit') {
       console.log('** exiting **');
       process.exit();
