@@ -1,5 +1,7 @@
 import Parcel from '../Parcel/Parcel';
-
+/**
+ * A manager to manage the queues.
+ */
 export default class ParcelQueueManager {
   private premiumRetryQueue: Parcel[];
   private premiumNewQueue: Parcel[];
@@ -13,6 +15,12 @@ export default class ParcelQueueManager {
     this.regularNewQueue = [];
   }
 
+  /**
+   * Queues the parcel in the correspondent queue.
+   *
+   * @param parcel the parcel to be queued.
+   * @param retried flag to check if it's premium or not.
+   */
   public queue(parcel: Parcel, retried = false) {
     if (retried) {
       parcel.isPremium()
@@ -25,7 +33,17 @@ export default class ParcelQueueManager {
     }
   }
 
+  /**
+   * Gets the next parcel with the highest priority from the queues.
+   * If it is not any, it will return undefined.
+   *
+   * @return The parcel with the highest priority or undefined if it's no parcel left.
+   */
   public getNextParcel(): Parcel | undefined {
+    /**
+     * If there is any item in the queue, the shift() method will return the first one.
+     * Otherwise, if the queue is empty, it will return undefined.
+     */
     let nextParcel = this.premiumRetryQueue.shift();
     if (!!nextParcel) {
       return nextParcel;
@@ -48,7 +66,10 @@ export default class ParcelQueueManager {
     return undefined;
   }
 
-  public queuesAreEmpty() {
+  /**
+   * @returns A boolean if the queues are empty or not.
+   */
+  public queuesAreEmpty(): boolean {
     return (
       this.premiumRetryQueue.length === 0 &&
       this.premiumNewQueue.length === 0 &&

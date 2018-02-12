@@ -2,7 +2,6 @@ import { EventEmitter } from 'events';
 import Parcel from './Parcel';
 import ParcelEvents from './ParcelEvents';
 
-// TODO fix tests
 describe('Parcel', () => {
   let parcel: Parcel;
   const emitter = new EventEmitter();
