@@ -30,7 +30,7 @@ This approach is composed by four main modules:
 Anyway, the main entry point to the app is the index.ts file, which start StandardInputCarrier to check the stdin.
 
 ###Parcel
-It is a class that represents the objects we want to send to the employees. Is is simple class that encapsulates the values we need for each parcel (*code*, *employee* and *premium*) and the logic to send and retry.
+It is a class that represents the objects we want to send to the employees. Is is simple class that encapsulates the values we need for each parcel (*code*, *employee* and *premium*) and the logic to send and retry. Note that we do not check if the code is unique, as there is no limitation telling it to us in the exercise, so **we do not check if two different parcels have different codes**
 
 It gets an *EventEmitter* from the *PostWoman* to tell her which is its state.
 
@@ -112,7 +112,7 @@ After that, and assuming that you have the code in your local machine, to the fo
 So, after getting the above done, there two options to run the code:
 
 - Type ***npm run clean*** and ***npm run start*** to do a new clean build and start the app.
-- Type ***npm run clean-start***. This command perfomrs a new clean build and starts it always. So it's my main option when runnig the app.
+- Type ***npm run clean-start***. This command perfomrs a new clean build and starts it always. So it's my **main option when runnig the app**.
 
 If you want to develop some new feature, you can try with ***npm run start-dev***. This will build and start an app whennever a change is made in any file.
 
