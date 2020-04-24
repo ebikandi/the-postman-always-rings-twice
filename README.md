@@ -1,6 +1,6 @@
 # The postwoman always rings twice
 
-#### _by Eneko Bikandi_
+### # _by Eneko Bikandi_
 
 In this codebase there is an approach to the Postwoman problem (explained in the _Exercise.md_ file).
 
@@ -30,7 +30,8 @@ This approach is composed by four main modules:
 
 Anyway, the main entry point to the app is the index.ts file, which start StandardInputCarrier to check the stdin.
 
-###Parcel
+### Parcel
+
 It is a class that represents the objects we want to send to the employees. Is is simple class that encapsulates the values we need for each parcel (_code_, _employee_ and _premium_) and the logic to send and retry. Note that we do not check if the code is unique, as there is no limitation telling it to us in the exercise, so **we do not check if two different parcels have different codes**
 
 It gets an _EventEmitter_ from the _PostWoman_ to tell her which is its state.
@@ -47,7 +48,8 @@ In only has a couple of main methods:
 - **Send()** for simulate the sending of the parcel to the employee. This sending process has been written to simulate an async method (maybe a call to an API) that lasts 1s. So this delay has been developed to simulate a real life behaviour. Without this simulation, the send call will be too quick, because is only a boolean check. So all the parcels would be sent directly and lots of logic would be unused.
 - **WaitAndRetry()** when a sending process has gone wrong just to wait for a needed delay _[100ms, 300ms, 1s]_ and retry the sending.
 
-###ParcelQueueManager
+### ParcelQueueManager
+
 It is a class to manage the parcel queues. It is meant to encapsulate all the logic referring to the queues and keep it away form the PostWoman. As she only needs to tell the queueManager to queue a parcel or to serve it, and the manager will decide where to queue it or from whence get it.
 
 It has for queues:
@@ -67,7 +69,8 @@ So this class only need a couple of basic functions:
 - **getNextParcel()**. To serve the next parcel with the highes priority. - It will check in the PremiumRetryQueue. If there is nothing in it, it will go for PremiumNew ones. Otherwise it will return a premium which is waiting for a retry. - If there is no new premium parcels, it will look on the RegularRetried queue. Otherwise it will serve a new Premium parcel. - If RegularRetriedQueue is empty will go for the RegularNew ones. If it's any, it will return a regular parel to retry. - If the RegularNew is empty, it means that there is no parcel queued, so it will return undefined. Otherwise, return the regular one.
 - **queuesAreEmpty()**. Just to check that queues are empty.
 
-###PostWoman
+### PostWoman
+
 The center piece of the app is the PostWoman. As the exercise statement tells, **there is only one PostWoman, so we use the Singleton pattern to ensure that**. By definition, Typescript modules are singleton (for more info see this [link](https://thedulinreport.com/2017/07/16/singletons-in-typescript/) ), so we use this feature just to export the only functionality we need, and avoid the instantiation of more PostWomen.
 
 The parcels will be broght by the ParcelQueueManager, so it only has to ask for another parcel, the queueManager will do its stuff to calculate the nest with the highest piority and will serve it to the PostWoman.
@@ -85,7 +88,8 @@ Its execution flow would be like this:
 - As it is the first parcel, it will send it. While the parcel is beeing processed (so the PostWoman will be busy) the rest of the incoming parcel will be queued.
 - When the parcel processing ends, it will ask for the next one to its ParcelQueueManager instance. - If the current processed parcel sending has gone bad, the PostWoman will queue it again when the parcel tells her that is ready to be sent, and not before.
 
-###StandardInputCarrier
+### StandardInputCarrier
+
 This is a simple util to get the input from the standar input and send parcels to the PostWoman. It is thought that each line has to be in the format which specifies the exercise statement, but anyway it goes with anything you write (avoiding special characters).
 It has some simple functionality hidden if you write this commands while it is running:
 
