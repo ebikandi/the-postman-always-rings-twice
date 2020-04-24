@@ -1,14 +1,13 @@
 {
-  "name": "enekobikandi-the-postman-always-rings-twice",
+  "name": "the-postman-always-rings-twice",
   "version": "0.0.1",
-  "description": "A premium/regular parcel distributing srevice in Js",
+  "description": "A premium/regular parcel distributing service in Js",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && tsc",
-    "start": "node dist/index.js",
-    "start-dev": "nodemon dist/index.js",
-    "clean-start": "npm run build && npm run start",
+    "start": "npm run build && node dist/index.js",
+    "start-dev": "npm run build && nodemon dist/index.js",
     "test": "jest --coverage --verbose"
   },
   "jest": {
@@ -31,11 +30,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://enekobikandi@bitbucket.org/eloygarcia_sh/enekobikandi-the-postman-always-rings-twice.git"
+    "url": "https://github.com/enekobi/the-postman-always-rings-twice.git"
   },
   "author": "Eneko Bikandi",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/eloygarcia_sh/enekobikandi-the-postman-always-rings-twice#readme",
+  "homepage": "https://github.com/enekobi/the-postman-always-rings-twice.git",
   "devDependencies": {
     "@types/jest": "^22.1.1",
     "@types/node": "^8.9.1",

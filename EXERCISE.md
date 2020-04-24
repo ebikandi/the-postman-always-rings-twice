@@ -1,6 +1,6 @@
 # The postwoman always rings twice
 
-We have two inboxes at StubHub where we collect parcels arriving at the office: one for premium service and the other for regular deliveries.
+We have two inboxes where we collect parcels arriving at the office: one for premium service and the other for regular deliveries.
 Our postwoman will take care of them and will deliver to our employees.
 Because some parcels won't be successfully delivered, we need to implement a retry policy to make sure 
 our engineers get all their gadgets, or at least we'll try a few times.
